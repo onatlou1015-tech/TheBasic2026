@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student cards · M1101–M1130 & M1201–M1230</title>
+    <!-- Font Awesome for subtle icons (optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            color: #1a2e3f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid rgba(60, 100, 130, 0.15);
+        }
+
+        h1 i {
+            color: #2a5f7a;
+            font-size: 1.8rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.2rem;
+        }
+
+        /* ----- card style (no names) ----- */
+        .student-card {
+            background: white;
+            border-radius: 1.4rem;
+            padding: 1.2rem 0.6rem 0.9rem;
+            box-shadow: 0 6px 14px rgba(0, 20, 30, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(200, 215, 225, 0.3);
+            cursor: pointer;
+            position: relative;
+            min-height: 100px;
+        }
+
+        .student-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 18px 28px -8px rgba(20, 60, 80, 0.2);
+            border-color: #7da1b9;
+            background: #ffffff;
+        }
+
+        .student-card:active {
+            transform: scale(0.96);
+            transition: 0.05s;
+        }
+
+        /* card content: only ID + small badge */
+        .student-id {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: #1b3b4f;
+            letter-spacing: 0.5px;
+            background: rgba(70, 130, 170, 0.06);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* removed .student-name block — no names displayed */
+
+        .badge-range {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.6rem;
+            font-size: 0.55rem;
+            background: #d4e2ed;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            color: #1d3f53;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            opacity: 0.5;
+        }
+
+        /* click feedback (popup) */
+        .toast-message {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1a2e3f;
+            color: #f0f7fc;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .toast-message.visible {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .toast-message i {
+            margin-right: 10px;
+            color: #8bc1e0;
+        }
+
+        .range-label {
+            display: inline-block;
+            background: rgba(40, 80, 110, 0.08);
+            border-radius: 50px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1e4157;
+            margin-bottom: 1.2rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-note {
+            margin-top: 1.8rem;
+            text-align: center;
+            color: #3b5b70;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            .card-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.9rem; }
+            .student-id { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>
+        <i class="fas fa-user-graduate"></i> 
+        Multiplication Table Flowchart
+        <span style="font-size: 0.9rem; font-weight: 300; margin-left: auto; opacity: 0.6;">
+            <i class="fas fa-id-card"></i> M1101–M1130 · M1201–M1230
+        </span>
+    </h1>
+
+    <div class="range-label">
+        <i class="fas fa-chevron-right" style="font-size: 0.6rem;"></i> 
+        click any card 
+        <i class="fas fa-chevron-left" style="font-size: 0.6rem;"></i>
+    </div>
+
+    <!-- card grid injected by js -->
+    <div id="cardGrid" class="card-grid"></div>
+
+    <div class="footer-note">
+        <i class="fas fa-mouse-pointer"></i> Tap a card to see student ID
+    </div>
+</div>
+
+<!-- toast / popup message -->
+<div id="toast" class="toast-message">
+    <i class="fas fa-id-badge"></i> 
+    <span id="toastText">Student selected</span>
+</div>
+
+<script>
+    (function() {
+        // ----- build student list: M1101–M1130 + M1201–M1230 -----
+        const studentIds = [];
+
+        // range 1: M1101 – M1130 (inclusive)
+        for (let i = 1101; i <= 1130; i++) {
+            studentIds.push(`M${i}`);
+        }
+        // range 2: M1201 – M1230 (inclusive)
+        for (let i = 1201; i <= 1230; i++) {
+            studentIds.push(`M${i}`);
+        }
+
+        // total 60 cards — no names
+
+        // ----- render cards (only ID, no name) -----
+        const grid = document.getElementById('cardGrid');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toastText');
+
+        grid.innerHTML = '';
+
+        const fragment = document.createDocumentFragment();
+
+        studentIds.forEach((id) => {
+            const card = document.createElement('div');
+            card.className = 'student-card';
+
+            // small range badge (I / II)
+            const numPart = parseInt(id.substring(1), 10);
+            let rangeBadge = 'A';
+            if (numPart >= 1101 && numPart <= 1130) rangeBadge = 'I';
+            else if (numPart >= 1201 && numPart <= 1230) rangeBadge = 'II';
+
+            // inner html: only ID, no name
+            card.innerHTML = `
+                <span class="badge-range">${rangeBadge}</span>
+                <div class="student-id">${id}</div>
+            `;
+
+            // ----- click handler: show only ID in toast -----
+            card.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const idText = this.querySelector('.student-id')?.textContent || id;
+
+                // show toast with student ID (no name)
+                toastText.innerHTML = `<strong>${idText}</strong>`;
+                toast.classList.add('visible');
+
+                clearTimeout(window.toastTimeout);
+                window.toastTimeout = setTimeout(() => {
+                    toast.classList.remove('visible');
+                }, 2500);
+
+                console.log(`📌 Selected: ${idText}`);
+            });
+
+            fragment.appendChild(card);
+        });
+
+        grid.appendChild(fragment);
+
+        // hide toast on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toast.classList.remove('visible');
+                clearTimeout(window.toastTimeout);
+            }
+        });
+
+        // ----- small initial hint (welcome toast) -----
+        setTimeout(() => {
+            toastText.innerHTML = `<i class="fas fa-hand-pointer"></i> Click any student card`;
+            toast.classList.add('visible');
+            setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 1800);
+        }, 300);
+
+        console.log(`✅ Loaded ${studentIds.length} student cards (M1101–M1130, M1201–M1230) — names removed`);
+    })();
+</script>
+
+</body>
+</html>
