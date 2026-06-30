@@ -365,6 +365,11 @@ I've created a Dragon Ball Z-themed HTML page for your students. The design feat
       const grid = document.getElementById('studentCardGrid');
       if (!grid) return;
 
+      if (typeof studentData === 'undefined') {
+        console.error('studentData is not defined. Make sure students.js is loaded.');
+        grid.innerHTML = '<p style="color: white; text-align: center;">Error: Student data not loaded. Please check students.js file.</p>';
+        return;
+      }
       // build cards
       studentData.forEach(([studentId, url]) => {
         const card = document.createElement('a');
@@ -408,5 +413,7 @@ I've created a Dragon Ball Z-themed HTML page for your students. The design feat
       });
     })();
   </script>
+  <!-- Load the student data AFTER the main script -->
+  <script src="students.js"></script>
 </body>
 </html>
