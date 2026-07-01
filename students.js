@@ -32,7 +32,7 @@ const studentData = [
   ["M3130", "https://GradCoder.github.io/portfolio/"],
   ["M3201", "https://M3201JavaJuggler.github.io/portfolio32/"],
   ["M3202", "https://M3203KernelKid.github.io/portfolio32/"],
-  ["M3203", "https://M3203LabCoatCoder.github.io/portfolio32/"],
+  ["M3203", "https://m3203labcoatcoder.github.io/portfolio32/"],
   ["M3204", "https://M32LearnByCoding.github.io/portfolio32/"],
   ["M3205", "https://M3205LabCoatCoder.github.io/portfolio32/"],
   ["M3206", "https://LunarLogicM3206.github.io/portfolio32/"],
