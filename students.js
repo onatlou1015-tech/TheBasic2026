@@ -59,5 +59,5 @@ const studentData = [
   ["M3227", "https://M3227UnitoCode.github.io/portfolio32/"],
   ["M3228", "https://VortexDev28.github.io/portfolio32/"],
   ["M3229", "https://ReactRookie.github.io/portfolio32/"],
-  ["M3230", "https://ZenCoder.github.io/portfolio32/"]
+  ["M3230", "https://m3230ZenCoder.github.io/portfolio32/"]
 ];
